@@ -9,10 +9,10 @@ Many times, I find myself attempting to search and answer the questions below du
 
 The same process repeats when I am implementing the action in another language. This set of notes thus attempts to be a cross reference between language implementations. At this stage, I will be compiling notes pertaining to R and Python.
 
-The notes follow a certain format for each action:
-1. How do I (action)?
-2. Sample Implementation in R
-3. Sample Implementation in Python
+The notes follow a certain format for each action:  
+1. How do I (action)?  
+2. Sample Implementation in R  
+3. Sample Implementation in Python  
 
 Initial collection includes:
 - Linear Algebra
