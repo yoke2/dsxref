@@ -16,6 +16,8 @@ The notes follow a certain format for each action:
 
 Initial collection includes:
 - Linear Algebra
+
+Roadmap:
 - Random Number Generation
 - Getting and Cleaning Data
 - Data Manipulation

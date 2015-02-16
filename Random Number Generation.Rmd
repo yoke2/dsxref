@@ -1,0 +1,42 @@
+---
+title: "Random Number Generation"
+output:
+  html_document:
+    keep_md: yes
+---
+
+### How do I set the seed and generate random numbers of the normal distribution?
+
+R:
+```{r seedrand-R}
+set.seed(39)
+# generates 10 values with mean = 0, standard deviation = 1
+rnorm(10, mean = 0, sd = 1) 
+```
+
+Python:
+```{r seedrand-python, engine='python'}
+import numpy as np
+np.random.seed(seed=39)
+# generates 10 values with mean = 0, standard deviation = 1
+a = np.random.randn(10)
+print a
+```
+
+### How do I generate random numbers of the uniform distribution?
+
+R:
+```{r runif-R}
+set.seed(39)
+# generates 10 values with mean = 0, standard deviation = 1
+runif(10, min = 0, max = 1) 
+```
+
+Python:
+```{r runif-python, engine='python'}
+import numpy as np
+np.random.seed(seed=39)
+# generates 10 values with mean = 0, standard deviation = 1
+a = np.random.uniform(low=0.0, high=1.0, size=10)
+print a
+```
