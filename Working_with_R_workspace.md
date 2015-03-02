@@ -1,0 +1,14 @@
+# Working with R Workspace
+
+### How do I set Revolutions R Open to update packages to the latest in Windows?
+
+1. Go to `C:\Program Files\RRO\R-<VERSION>\etc`
+2. Open Rprofile.site for editing in administrator mode
+3. Add this line `options(repos = c(CRAN = "http://cran.revolutionanalytics.com"))`
+4. Comment out this line like this: `#options(repos = c(CRAN = "http://mran.revolutionanalytics.com/snapshot/<DATE>"))`
+
+More info [here](http://mran.revolutionanalytics.com/faq/#change-repos). Do take note that the recommendation is to change .Rprofile rather than "Rprofile.site".
+
+### How do I unload a library?
+
+1. Use the detach command: `detach("package:<PACKAGE_NAME>", unload=TRUE)`

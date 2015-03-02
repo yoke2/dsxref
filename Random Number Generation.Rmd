@@ -2,6 +2,7 @@
 title: "Random Number Generation"
 output:
   html_document:
+    highlight: pygments
     keep_md: yes
 ---
 

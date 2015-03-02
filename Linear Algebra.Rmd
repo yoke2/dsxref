@@ -2,6 +2,7 @@
 title: "Linear Algebra"
 output:
   html_document:
+    highlight: pygments
     keep_md: yes
 ---
 
