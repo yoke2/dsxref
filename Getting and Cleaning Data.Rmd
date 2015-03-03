@@ -1,0 +1,53 @@
+---
+title: "Getting and Cleaning Data"
+output:
+  html_document:
+    highlight: pygments
+    keep_md: yes
+---
+
+### How do I read a csv file?
+
+We are using the iris dataset hosted on Github by [Vincent Arel-Bundock](http://vincentarelbundock.github.io/Rdatasets/datasets.html).
+
+R:
+```{r readcsv-R, cache=TRUE}
+url = "http://vincentarelbundock.github.io/Rdatasets/csv/datasets/iris.csv"
+download.file(url, "iris.csv", quiet=TRUE)
+iris <- read.csv("iris.csv", header=TRUE, stringsAsFactors=FALSE)
+head(iris, 3)
+```
+
+Python:
+```{r readcsv-python, engine='python', cache=TRUE}
+import pandas as pd
+import urllib
+url = "http://vincentarelbundock.github.io/Rdatasets/csv/datasets/iris.csv"
+urllib.urlretrieve(url, "iris.csv")
+iris = pd.read_csv("iris.csv", header=0)
+print iris.head(n=3)
+```
+
+
+### How do I read a json file?
+
+We are using [JSONPlaceHolder](http://jsonplaceholder.typicode.com/) to simulate JSON dataset.
+
+R:
+```{r readjson-R, cache=TRUE}
+library(jsonlite)
+url <- "http://jsonplaceholder.typicode.com/users"
+data <- fromJSON(url)
+head(data, 3)
+```
+
+Python:
+```{r readjson-python, engine='python', cache=TRUE}
+import pandas as pd
+import requests
+url = "http://jsonplaceholder.typicode.com/users"
+response = requests.get(url)
+data = response.json()
+df = pd.io.json.json_normalize(data)
+print df.head(n=3)
+```
