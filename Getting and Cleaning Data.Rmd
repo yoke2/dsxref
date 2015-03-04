@@ -28,6 +28,30 @@ iris = pd.read_csv("iris.csv", header=0)
 print iris.head(n=3)
 ```
 
+### How do I read an Excel(xlsx) file?
+
+We are using the iris dataset saved in the Excel xlsx format.
+
+R:
+```{r readxlsx-R, cache=TRUE}
+library(xlsx)
+library(httr)
+url <- "https://rawgit.com/yoke2/dsxref/master/iris.xlsx"
+# note that we are handling HTTPS connection using httr package.
+GET(url, write_disk("iris.xlsx", overwrite=TRUE))
+iris <- read.xlsx("iris.xlsx", sheetIndex=1, header=TRUE)
+head(iris, 3)
+```
+
+Python:
+```{r readxlsx-python, engine='python', cache=TRUE}
+import pandas as pd
+import urllib
+url = "https://rawgit.com/yoke2/dsxref/master/iris.xlsx"
+urllib.urlretrieve(url, "iris.xlsx")
+iris = pd.read_excel("iris.xlsx", sheetname=0, header=0)
+print iris.head(n=3)
+```
 
 ### How do I read a json file?
 

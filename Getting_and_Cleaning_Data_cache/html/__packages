@@ -1,2 +1,6 @@
 base
 jsonlite
+rJava
+xlsxjars
+xlsx
+httr

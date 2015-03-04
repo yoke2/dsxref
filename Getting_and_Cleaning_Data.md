@@ -38,6 +38,58 @@ print iris.head(n=3)
 ## 2           3           4.7          3.2           1.3          0.2  setosa
 ```
 
+### How do I read an Excel(xlsx) file?
+
+We are using the iris dataset saved in the Excel xlsx format.
+
+R:
+
+```r
+library(xlsx)
+library(httr)
+url <- "https://rawgit.com/yoke2/dsxref/master/iris.xlsx"
+# note that we are handling HTTPS connection using httr package.
+GET(url, write_disk("iris.xlsx", overwrite=TRUE))
+```
+
+```
+## Response [https://raw.githubusercontent.com/yoke2/dsxref/master/iris.xlsx]
+##   Date: 2015-03-04 00:18
+##   Status: 200
+##   Content-Type: application/octet-stream
+##   Size: 14.1 kB
+## <ON DISK>  iris.xlsx
+```
+
+```r
+iris <- read.xlsx("iris.xlsx", sheetIndex=1, header=TRUE)
+head(iris, 3)
+```
+
+```
+##   NA. Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+## 1   1          5.1         3.5          1.4         0.2  setosa
+## 2   2          4.9         3.0          1.4         0.2  setosa
+## 3   3          4.7         3.2          1.3         0.2  setosa
+```
+
+Python:
+
+```python
+import pandas as pd
+import urllib
+url = "https://rawgit.com/yoke2/dsxref/master/iris.xlsx"
+urllib.urlretrieve(url, "iris.xlsx")
+iris = pd.read_excel("iris.xlsx", sheetname=0, header=0)
+print iris.head(n=3)
+```
+
+```
+##    Sepal.Length  Sepal.Width  Petal.Length  Petal.Width Species
+## 1           5.1          3.5           1.4          0.2  setosa
+## 2           4.9          3.0           1.4          0.2  setosa
+## 3           4.7          3.2           1.3          0.2  setosa
+```
 
 ### How do I read a json file?
 
