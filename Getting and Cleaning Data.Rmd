@@ -75,3 +75,46 @@ data = response.json()
 df = pd.io.json.json_normalize(data)
 print df.head(n=3)
 ```
+
+### How do I search and retrieve Tweets from Twitter? (via packages)
+
+You will need Twitter developer account set up for consumer key, consumer secret, access token and access secret. We are using twitteR package in R and tweepy package in Python.
+
+R:
+```{r readtweets-R}
+library(twitteR)
+consumerKey <- readLines("twitterkey.txt")
+consumerSecret <- readLines("twittersecret.txt")
+accessToken <- readLines("twitteraccesstoken.txt")
+accessTokenSecret <- readLines("twitteraccesstokensecret.txt")
+setup_twitter_oauth(consumerKey,consumerSecret,accessToken,accessTokenSecret)
+
+tweets <- searchTwitter("#datascience", n=5)
+tweetsDF <- twListToDF(tweets)
+head(tweetsDF,3)
+```
+
+Python:
+```{r readtweets-python, engine='python'}
+import tweepy
+import pandas as pd
+file1 = open('twitterkey.txt', 'r')
+file2 = open('twittersecret.txt', 'r')
+file3 = open('twitteraccesstoken.txt', 'r')
+file4 = open('twitteraccesstokensecret.txt', 'r')
+consumerKey = file1.readline().strip()
+consumerSecret = file2.readline().strip()
+accessToken = file3.readline().strip()
+accessTokenSecret = file4.readline().strip()
+
+auth = tweepy.OAuthHandler(consumerKey, consumerSecret)
+auth.set_access_token(accessToken, accessTokenSecret)
+api = tweepy.API(auth)
+tweets = api.search("datascience",rpp=10)
+new = pd.DataFrame()
+for tweet in tweets:
+    new = new.append(pd.DataFrame.from_dict(tweet.__dict__,orient="index").transpose())
+# some columns are in object form that requires more processing
+print new.head(n=3)
+```
+

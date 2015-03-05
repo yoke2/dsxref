@@ -195,6 +195,110 @@ df = pd.io.json.json_normalize(data)
 ## 1  anastasia.net  
 ## 2    ramiro.info</code></pre>
 </div>
+<div id="how-do-i-search-and-retrieve-tweets-from-twitter-via-packages" class="section level3">
+<h3>How do I search and retrieve Tweets from Twitter? (via packages)</h3>
+<p>You will need Twitter developer account set up for consumer key, consumer secret, access token and access secret. We are using twitteR package in R and tweepy package in Python.</p>
+<p>R:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(twitteR)
+consumerKey &lt;-<span class="st"> </span><span class="kw">readLines</span>(<span class="st">&quot;twitterkey.txt&quot;</span>)
+consumerSecret &lt;-<span class="st"> </span><span class="kw">readLines</span>(<span class="st">&quot;twittersecret.txt&quot;</span>)
+accessToken &lt;-<span class="st"> </span><span class="kw">readLines</span>(<span class="st">&quot;twitteraccesstoken.txt&quot;</span>)
+accessTokenSecret &lt;-<span class="st"> </span><span class="kw">readLines</span>(<span class="st">&quot;twitteraccesstokensecret.txt&quot;</span>)</code></pre>
+<pre><code>## Warning in readLines(&quot;twitteraccesstokensecret.txt&quot;): incomplete final
+## line found on 'twitteraccesstokensecret.txt'</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">setup_twitter_oauth</span>(consumerKey,consumerSecret,accessToken,accessTokenSecret)</code></pre>
+<pre><code>## [1] &quot;Using direct authentication&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">tweets &lt;-<span class="st"> </span><span class="kw">searchTwitter</span>(<span class="st">&quot;#datascience&quot;</span>, <span class="dt">n=</span><span class="dv">5</span>)
+tweetsDF &lt;-<span class="st"> </span><span class="kw">twListToDF</span>(tweets)
+<span class="kw">head</span>(tweetsDF,<span class="dv">3</span>)</code></pre>
+<pre><code>##                                                                                                                                       text
+## 1                  RT @mjcavaretta: MT @GMcareersDonna: Why #Women Make Great #DataScientists http://t.co/SL3jhsNqHC #DataScience #BigData
+## 2 RT @KirkDBorne: Programming for #DataScience in Python + R + SQL: http://t.co/HSNv4RBLJt #abdsc #BigData #Analytics via @DataScienceCtrl
+## 3                                   MT @GMcareersDonna: Why #Women Make Great #DataScientists http://t.co/SL3jhsNqHC #DataScience #BigData
+##   favorited favoriteCount replyToSN             created truncated
+## 1     FALSE             0        NA 2015-03-05 16:27:33     FALSE
+## 2     FALSE             0        NA 2015-03-05 16:26:15     FALSE
+## 3     FALSE             0        NA 2015-03-05 16:25:47     FALSE
+##   replyToSID                 id replyToUID
+## 1         NA 573520234272944129         NA
+## 2         NA 573519904407699456         NA
+## 3         NA 573519786610720768         NA
+##                                                                          statusSource
+## 1                  &lt;a href=&quot;http://twitter.com&quot; rel=&quot;nofollow&quot;&gt;Twitter Web Client&lt;/a&gt;
+## 2                  &lt;a href=&quot;http://twitter.com&quot; rel=&quot;nofollow&quot;&gt;Twitter Web Client&lt;/a&gt;
+## 3 &lt;a href=&quot;https://about.twitter.com/products/tweetdeck&quot; rel=&quot;nofollow&quot;&gt;TweetDeck&lt;/a&gt;
+##    screenName retweetCount isRetweet retweeted longitude latitude
+## 1    GilPress            1      TRUE     FALSE        NA       NA
+## 2    alowibdi            4      TRUE     FALSE        NA       NA
+## 3 mjcavaretta            1     FALSE     FALSE        NA       NA</code></pre>
+<p>Python:</p>
+<pre class="sourceCode python"><code class="sourceCode python"><span class="ch">import</span> tweepy
+<span class="ch">import</span> pandas <span class="ch">as</span> pd
+file1 = <span class="dt">open</span>(<span class="st">'twitterkey.txt'</span>, <span class="st">'r'</span>)
+file2 = <span class="dt">open</span>(<span class="st">'twittersecret.txt'</span>, <span class="st">'r'</span>)
+file3 = <span class="dt">open</span>(<span class="st">'twitteraccesstoken.txt'</span>, <span class="st">'r'</span>)
+file4 = <span class="dt">open</span>(<span class="st">'twitteraccesstokensecret.txt'</span>, <span class="st">'r'</span>)
+consumerKey = file1.readline().strip()
+consumerSecret = file2.readline().strip()
+accessToken = file3.readline().strip()
+accessTokenSecret = file4.readline().strip()
+
+auth = tweepy.OAuthHandler(consumerKey, consumerSecret)
+auth.set_access_token(accessToken, accessTokenSecret)
+api = tweepy.API(auth)
+tweets = api.search(<span class="st">&quot;datascience&quot;</span>,rpp=<span class="dv">10</span>)
+new = pd.DataFrame()
+<span class="kw">for</span> tweet in tweets:
+    new = new.append(pd.DataFrame.from_dict(tweet.__dict__,orient=<span class="st">&quot;index&quot;</span>).transpose())
+<span class="co"># some columns are in object form that requires more processing</span>
+<span class="dt">print</span> new.head(n=<span class="dv">3</span>)</code></pre>
+<pre><code>##                                             _api  \
+## 0  &lt;tweepy.api.API object at 0x0000000006452550&gt;   
+## 0  &lt;tweepy.api.API object at 0x0000000006452550&gt;   
+## 0  &lt;tweepy.api.API object at 0x0000000006452550&gt;   
+## 
+##                                                _json  \
+## 0  {u'contributors': None, u'truncated': False, u...   
+## 0  {u'contributors': None, u'truncated': False, u...   
+## 0  {u'contributors': None, u'truncated': False, u...   
+## 
+##                                               author contributors coordinates  \
+## 0  User(follow_request_sent=False, profile_use_ba...         None        None   
+## 0  User(follow_request_sent=False, profile_use_ba...         None        None   
+## 0  User(follow_request_sent=False, profile_use_ba...         None        None   
+## 
+##             created_at                                           entities  \
+## 0  2015-03-05 16:27:33  {u'symbols': [], u'user_mentions': [{u'id': 38...   
+## 0  2015-03-05 16:26:15  {u'symbols': [], u'user_mentions': [{u'id': 53...   
+## 0  2015-03-05 16:25:47  {u'symbols': [], u'user_mentions': [{u'id': 28...   
+## 
+##   favorite_count favorited   geo  ...  place possibly_sensitive retweet_count  \
+## 0              0     False  None  ...   None              False             1   
+## 0              0     False  None  ...   None              False             4   
+## 0              0     False  None  ...   None              False             1   
+## 
+##   retweeted                                   retweeted_status  \
+## 0     False  Status(contributors=None, truncated=False, tex...   
+## 0     False  Status(contributors=None, truncated=False, tex...   
+## 0     False                                                NaN   
+## 
+##                source                                    source_url  \
+## 0  Twitter Web Client                            http://twitter.com   
+## 0  Twitter Web Client                            http://twitter.com   
+## 0           TweetDeck  https://about.twitter.com/products/tweetdeck   
+## 
+##                                                 text truncated  \
+## 0  RT @mjcavaretta: MT @GMcareersDonna: Why #Wome...     False   
+## 0  RT @KirkDBorne: Programming for #DataScience i...     False   
+## 0  MT @GMcareersDonna: Why #Women Make Great #Dat...     False   
+## 
+##                                                 user  
+## 0  User(follow_request_sent=False, profile_use_ba...  
+## 0  User(follow_request_sent=False, profile_use_ba...  
+## 0  User(follow_request_sent=False, profile_use_ba...  
+## 
+## [3 rows x 29 columns]</code></pre>
+</div>
 
 
 </div>

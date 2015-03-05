@@ -173,3 +173,134 @@ print df.head(n=3)
 ## 1  anastasia.net  
 ## 2    ramiro.info
 ```
+
+### How do I search and retrieve Tweets from Twitter? (via packages)
+
+You will need Twitter developer account set up for consumer key, consumer secret, access token and access secret. We are using twitteR package in R and tweepy package in Python.
+
+R:
+
+```r
+library(twitteR)
+consumerKey <- readLines("twitterkey.txt")
+consumerSecret <- readLines("twittersecret.txt")
+accessToken <- readLines("twitteraccesstoken.txt")
+accessTokenSecret <- readLines("twitteraccesstokensecret.txt")
+```
+
+```
+## Warning in readLines("twitteraccesstokensecret.txt"): incomplete final
+## line found on 'twitteraccesstokensecret.txt'
+```
+
+```r
+setup_twitter_oauth(consumerKey,consumerSecret,accessToken,accessTokenSecret)
+```
+
+```
+## [1] "Using direct authentication"
+```
+
+```r
+tweets <- searchTwitter("#datascience", n=5)
+tweetsDF <- twListToDF(tweets)
+head(tweetsDF,3)
+```
+
+```
+##                                                                                                                                       text
+## 1                  RT @mjcavaretta: MT @GMcareersDonna: Why #Women Make Great #DataScientists http://t.co/SL3jhsNqHC #DataScience #BigData
+## 2 RT @KirkDBorne: Programming for #DataScience in Python + R + SQL: http://t.co/HSNv4RBLJt #abdsc #BigData #Analytics via @DataScienceCtrl
+## 3                                   MT @GMcareersDonna: Why #Women Make Great #DataScientists http://t.co/SL3jhsNqHC #DataScience #BigData
+##   favorited favoriteCount replyToSN             created truncated
+## 1     FALSE             0        NA 2015-03-05 16:27:33     FALSE
+## 2     FALSE             0        NA 2015-03-05 16:26:15     FALSE
+## 3     FALSE             0        NA 2015-03-05 16:25:47     FALSE
+##   replyToSID                 id replyToUID
+## 1         NA 573520234272944129         NA
+## 2         NA 573519904407699456         NA
+## 3         NA 573519786610720768         NA
+##                                                                          statusSource
+## 1                  <a href="http://twitter.com" rel="nofollow">Twitter Web Client</a>
+## 2                  <a href="http://twitter.com" rel="nofollow">Twitter Web Client</a>
+## 3 <a href="https://about.twitter.com/products/tweetdeck" rel="nofollow">TweetDeck</a>
+##    screenName retweetCount isRetweet retweeted longitude latitude
+## 1    GilPress            1      TRUE     FALSE        NA       NA
+## 2    alowibdi            4      TRUE     FALSE        NA       NA
+## 3 mjcavaretta            1     FALSE     FALSE        NA       NA
+```
+
+Python:
+
+```python
+import tweepy
+import pandas as pd
+file1 = open('twitterkey.txt', 'r')
+file2 = open('twittersecret.txt', 'r')
+file3 = open('twitteraccesstoken.txt', 'r')
+file4 = open('twitteraccesstokensecret.txt', 'r')
+consumerKey = file1.readline().strip()
+consumerSecret = file2.readline().strip()
+accessToken = file3.readline().strip()
+accessTokenSecret = file4.readline().strip()
+
+auth = tweepy.OAuthHandler(consumerKey, consumerSecret)
+auth.set_access_token(accessToken, accessTokenSecret)
+api = tweepy.API(auth)
+tweets = api.search("datascience",rpp=10)
+new = pd.DataFrame()
+for tweet in tweets:
+    new = new.append(pd.DataFrame.from_dict(tweet.__dict__,orient="index").transpose())
+# some columns are in object form that requires more processing
+print new.head(n=3)
+```
+
+```
+##                                             _api  \
+## 0  <tweepy.api.API object at 0x0000000006452550>   
+## 0  <tweepy.api.API object at 0x0000000006452550>   
+## 0  <tweepy.api.API object at 0x0000000006452550>   
+## 
+##                                                _json  \
+## 0  {u'contributors': None, u'truncated': False, u...   
+## 0  {u'contributors': None, u'truncated': False, u...   
+## 0  {u'contributors': None, u'truncated': False, u...   
+## 
+##                                               author contributors coordinates  \
+## 0  User(follow_request_sent=False, profile_use_ba...         None        None   
+## 0  User(follow_request_sent=False, profile_use_ba...         None        None   
+## 0  User(follow_request_sent=False, profile_use_ba...         None        None   
+## 
+##             created_at                                           entities  \
+## 0  2015-03-05 16:27:33  {u'symbols': [], u'user_mentions': [{u'id': 38...   
+## 0  2015-03-05 16:26:15  {u'symbols': [], u'user_mentions': [{u'id': 53...   
+## 0  2015-03-05 16:25:47  {u'symbols': [], u'user_mentions': [{u'id': 28...   
+## 
+##   favorite_count favorited   geo  ...  place possibly_sensitive retweet_count  \
+## 0              0     False  None  ...   None              False             1   
+## 0              0     False  None  ...   None              False             4   
+## 0              0     False  None  ...   None              False             1   
+## 
+##   retweeted                                   retweeted_status  \
+## 0     False  Status(contributors=None, truncated=False, tex...   
+## 0     False  Status(contributors=None, truncated=False, tex...   
+## 0     False                                                NaN   
+## 
+##                source                                    source_url  \
+## 0  Twitter Web Client                            http://twitter.com   
+## 0  Twitter Web Client                            http://twitter.com   
+## 0           TweetDeck  https://about.twitter.com/products/tweetdeck   
+## 
+##                                                 text truncated  \
+## 0  RT @mjcavaretta: MT @GMcareersDonna: Why #Wome...     False   
+## 0  RT @KirkDBorne: Programming for #DataScience i...     False   
+## 0  MT @GMcareersDonna: Why #Women Make Great #Dat...     False   
+## 
+##                                                 user  
+## 0  User(follow_request_sent=False, profile_use_ba...  
+## 0  User(follow_request_sent=False, profile_use_ba...  
+## 0  User(follow_request_sent=False, profile_use_ba...  
+## 
+## [3 rows x 29 columns]
+```
+
