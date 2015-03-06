@@ -46,6 +46,14 @@ R:
 
 ```r
 library(xlsx)
+```
+
+```
+## Loading required package: rJava
+## Loading required package: xlsxjars
+```
+
+```r
 library(httr)
 url <- "https://rawgit.com/yoke2/dsxref/master/iris.xlsx"
 # note that we are handling HTTPS connection using httr package.
@@ -54,7 +62,7 @@ GET(url, write_disk("iris.xlsx", overwrite=TRUE))
 
 ```
 ## Response [https://raw.githubusercontent.com/yoke2/dsxref/master/iris.xlsx]
-##   Date: 2015-03-04 00:18
+##   Date: 2015-03-07 00:23
 ##   Status: 200
 ##   Content-Type: application/octet-stream
 ##   Size: 14.1 kB
@@ -208,26 +216,26 @@ head(tweetsDF,3)
 ```
 
 ```
-##                                                                                                                                       text
-## 1                  RT @mjcavaretta: MT @GMcareersDonna: Why #Women Make Great #DataScientists http://t.co/SL3jhsNqHC #DataScience #BigData
-## 2 RT @KirkDBorne: Programming for #DataScience in Python + R + SQL: http://t.co/HSNv4RBLJt #abdsc #BigData #Analytics via @DataScienceCtrl
-## 3                                   MT @GMcareersDonna: Why #Women Make Great #DataScientists http://t.co/SL3jhsNqHC #DataScience #BigData
+##                                                                                                                             text
+## 1    Predictions, #DataScience #DataPrep join the tweetchat 3/11;11:00PST with @JulesMayhem @superlilia \nhttp://t.co/Fz71QSkZyh
+## 2 RT @BigDataGal: #rstats #datascience Very gentle resource for speeding up R code http://t.co/SLtXqN3Crp http://t.co/pLXVUbVOiS
+## 3                                                      We've been honored as a top #DataScience resource: http://t.co/ylfbjpRqLi
 ##   favorited favoriteCount replyToSN             created truncated
-## 1     FALSE             0        NA 2015-03-05 16:27:33     FALSE
-## 2     FALSE             0        NA 2015-03-05 16:26:15     FALSE
-## 3     FALSE             0        NA 2015-03-05 16:25:47     FALSE
+## 1     FALSE             1        NA 2015-03-06 16:22:39     FALSE
+## 2     FALSE             0        NA 2015-03-06 16:21:53     FALSE
+## 3     FALSE             0        NA 2015-03-06 16:20:42     FALSE
 ##   replyToSID                 id replyToUID
-## 1         NA 573520234272944129         NA
-## 2         NA 573519904407699456         NA
-## 3         NA 573519786610720768         NA
-##                                                                          statusSource
-## 1                  <a href="http://twitter.com" rel="nofollow">Twitter Web Client</a>
-## 2                  <a href="http://twitter.com" rel="nofollow">Twitter Web Client</a>
-## 3 <a href="https://about.twitter.com/products/tweetdeck" rel="nofollow">TweetDeck</a>
-##    screenName retweetCount isRetweet retweeted longitude latitude
-## 1    GilPress            1      TRUE     FALSE        NA       NA
-## 2    alowibdi            4      TRUE     FALSE        NA       NA
-## 3 mjcavaretta            1     FALSE     FALSE        NA       NA
+## 1         NA 573881388455211009         NA
+## 2         NA 573881192182849536         NA
+## 3         NA 573880897004511235         NA
+##                                                                         statusSource
+## 1 <a href="http://twitter.com/download/iphone" rel="nofollow">Twitter for iPhone</a>
+## 2                 <a href="http://twitter.com" rel="nofollow">Twitter Web Client</a>
+## 3                    <a href="http://www.hootsuite.com" rel="nofollow">Hootsuite</a>
+##    screenName retweetCount isRetweet retweeted     longitude    latitude
+## 1        JAdP            0     FALSE     FALSE -122.51167131 37.52982376
+## 2   civilstat            4      TRUE     FALSE          <NA>        <NA>
+## 3 SmartDataCo            0     FALSE     FALSE          <NA>        <NA>
 ```
 
 Python:
@@ -257,44 +265,59 @@ print new.head(n=3)
 
 ```
 ##                                             _api  \
-## 0  <tweepy.api.API object at 0x0000000006452550>   
-## 0  <tweepy.api.API object at 0x0000000006452550>   
-## 0  <tweepy.api.API object at 0x0000000006452550>   
+## 0  <tweepy.api.API object at 0x0000000006498550>   
+## 0  <tweepy.api.API object at 0x0000000006498550>   
+## 0  <tweepy.api.API object at 0x0000000006498550>   
 ## 
 ##                                                _json  \
 ## 0  {u'contributors': None, u'truncated': False, u...   
 ## 0  {u'contributors': None, u'truncated': False, u...   
 ## 0  {u'contributors': None, u'truncated': False, u...   
 ## 
-##                                               author contributors coordinates  \
-## 0  User(follow_request_sent=False, profile_use_ba...         None        None   
-## 0  User(follow_request_sent=False, profile_use_ba...         None        None   
-## 0  User(follow_request_sent=False, profile_use_ba...         None        None   
+##                                               author contributors  \
+## 0  User(follow_request_sent=False, profile_use_ba...         None   
+## 0  User(follow_request_sent=False, profile_use_ba...         None   
+## 0  User(follow_request_sent=False, profile_use_ba...         None   
 ## 
-##             created_at                                           entities  \
-## 0  2015-03-05 16:27:33  {u'symbols': [], u'user_mentions': [{u'id': 38...   
-## 0  2015-03-05 16:26:15  {u'symbols': [], u'user_mentions': [{u'id': 53...   
-## 0  2015-03-05 16:25:47  {u'symbols': [], u'user_mentions': [{u'id': 28...   
+##                                          coordinates           created_at  \
+## 0  {u'type': u'Point', u'coordinates': [-122.5116...  2015-03-06 16:22:39   
+## 0                                               None  2015-03-06 16:21:53   
+## 0                                               None  2015-03-06 16:20:42   
 ## 
-##   favorite_count favorited   geo  ...  place possibly_sensitive retweet_count  \
-## 0              0     False  None  ...   None              False             1   
-## 0              0     False  None  ...   None              False             4   
-## 0              0     False  None  ...   None              False             1   
+##                                             entities favorite_count favorited  \
+## 0  {u'symbols': [], u'user_mentions': [{u'id': 34...              1     False   
+## 0  {u'symbols': [], u'user_mentions': [{u'id': 89...              0     False   
+## 0  {u'symbols': [], u'user_mentions': [], u'hasht...              0     False   
 ## 
-##   retweeted                                   retweeted_status  \
-## 0     False  Status(contributors=None, truncated=False, tex...   
-## 0     False  Status(contributors=None, truncated=False, tex...   
-## 0     False                                                NaN   
+##                                                  geo  \
+## 0  {u'type': u'Point', u'coordinates': [37.529823...   
+## 0                                               None   
+## 0                                               None   
 ## 
-##                source                                    source_url  \
-## 0  Twitter Web Client                            http://twitter.com   
-## 0  Twitter Web Client                            http://twitter.com   
-## 0           TweetDeck  https://about.twitter.com/products/tweetdeck   
+##                          ...                          \
+## 0                        ...                           
+## 0                        ...                           
+## 0                        ...                           
+## 
+##                                                place possibly_sensitive  \
+## 0  Place(_api=<tweepy.api.API object at 0x0000000...              False   
+## 0                                               None              False   
+## 0                                               None              False   
+## 
+##   retweet_count retweeted                                   retweeted_status  \
+## 0             0     False                                                NaN   
+## 0             4     False  Status(contributors=None, truncated=False, tex...   
+## 0             0     False                                                NaN   
+## 
+##                source                          source_url  \
+## 0  Twitter for iPhone  http://twitter.com/download/iphone   
+## 0  Twitter Web Client                  http://twitter.com   
+## 0           Hootsuite            http://www.hootsuite.com   
 ## 
 ##                                                 text truncated  \
-## 0  RT @mjcavaretta: MT @GMcareersDonna: Why #Wome...     False   
-## 0  RT @KirkDBorne: Programming for #DataScience i...     False   
-## 0  MT @GMcareersDonna: Why #Women Make Great #Dat...     False   
+## 0  Predictions, #DataScience #DataPrep join the t...     False   
+## 0  RT @BigDataGal: #rstats #datascience Very gent...     False   
+## 0  We've been honored as a top #DataScience resou...     False   
 ## 
 ##                                                 user  
 ## 0  User(follow_request_sent=False, profile_use_ba...  
@@ -302,5 +325,40 @@ print new.head(n=3)
 ## 0  User(follow_request_sent=False, profile_use_ba...  
 ## 
 ## [3 rows x 29 columns]
+```
+
+### How do I test for NA/null values in a variable?
+
+
+R:
+
+```r
+url = "http://vincentarelbundock.github.io/Rdatasets/csv/datasets/airquality.csv"
+download.file(url, "airquality.csv", quiet=TRUE)
+airquality <- read.csv("airquality.csv", header=TRUE, stringsAsFactors=FALSE)
+table(is.na(airquality$Ozone))
+```
+
+```
+## 
+## FALSE  TRUE 
+##   116    37
+```
+
+Python:
+
+```python
+import pandas as pd
+import urllib
+url = "http://vincentarelbundock.github.io/Rdatasets/csv/datasets/airquality.csv"
+urllib.urlretrieve(url, "airquality.csv")
+airquality = pd.read_csv("airquality.csv", header=0)
+print pd.crosstab('Ozone',pd.isnull(airquality['Ozone']))
+```
+
+```
+## Ozone  False  True 
+## row_0              
+## Ozone    116     37
 ```
 

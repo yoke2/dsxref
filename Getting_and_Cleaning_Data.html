@@ -103,13 +103,15 @@ iris = pd.read_csv(<span class="st">&quot;iris.csv&quot;</span>, header=<span cl
 <h3>How do I read an Excel(xlsx) file?</h3>
 <p>We are using the iris dataset saved in the Excel xlsx format.</p>
 <p>R:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(xlsx)
-<span class="kw">library</span>(httr)
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(xlsx)</code></pre>
+<pre><code>## Loading required package: rJava
+## Loading required package: xlsxjars</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(httr)
 url &lt;-<span class="st"> &quot;https://rawgit.com/yoke2/dsxref/master/iris.xlsx&quot;</span>
 <span class="co"># note that we are handling HTTPS connection using httr package.</span>
 <span class="kw">GET</span>(url, <span class="kw">write_disk</span>(<span class="st">&quot;iris.xlsx&quot;</span>, <span class="dt">overwrite=</span><span class="ot">TRUE</span>))</code></pre>
 <pre><code>## Response [https://raw.githubusercontent.com/yoke2/dsxref/master/iris.xlsx]
-##   Date: 2015-03-04 00:18
+##   Date: 2015-03-07 00:23
 ##   Status: 200
 ##   Content-Type: application/octet-stream
 ##   Size: 14.1 kB
@@ -211,26 +213,26 @@ accessTokenSecret &lt;-<span class="st"> </span><span class="kw">readLines</span
 <pre class="sourceCode r"><code class="sourceCode r">tweets &lt;-<span class="st"> </span><span class="kw">searchTwitter</span>(<span class="st">&quot;#datascience&quot;</span>, <span class="dt">n=</span><span class="dv">5</span>)
 tweetsDF &lt;-<span class="st"> </span><span class="kw">twListToDF</span>(tweets)
 <span class="kw">head</span>(tweetsDF,<span class="dv">3</span>)</code></pre>
-<pre><code>##                                                                                                                                       text
-## 1                  RT @mjcavaretta: MT @GMcareersDonna: Why #Women Make Great #DataScientists http://t.co/SL3jhsNqHC #DataScience #BigData
-## 2 RT @KirkDBorne: Programming for #DataScience in Python + R + SQL: http://t.co/HSNv4RBLJt #abdsc #BigData #Analytics via @DataScienceCtrl
-## 3                                   MT @GMcareersDonna: Why #Women Make Great #DataScientists http://t.co/SL3jhsNqHC #DataScience #BigData
+<pre><code>##                                                                                                                             text
+## 1    Predictions, #DataScience #DataPrep join the tweetchat 3/11;11:00PST with @JulesMayhem @superlilia \nhttp://t.co/Fz71QSkZyh
+## 2 RT @BigDataGal: #rstats #datascience Very gentle resource for speeding up R code http://t.co/SLtXqN3Crp http://t.co/pLXVUbVOiS
+## 3                                                      We've been honored as a top #DataScience resource: http://t.co/ylfbjpRqLi
 ##   favorited favoriteCount replyToSN             created truncated
-## 1     FALSE             0        NA 2015-03-05 16:27:33     FALSE
-## 2     FALSE             0        NA 2015-03-05 16:26:15     FALSE
-## 3     FALSE             0        NA 2015-03-05 16:25:47     FALSE
+## 1     FALSE             1        NA 2015-03-06 16:22:39     FALSE
+## 2     FALSE             0        NA 2015-03-06 16:21:53     FALSE
+## 3     FALSE             0        NA 2015-03-06 16:20:42     FALSE
 ##   replyToSID                 id replyToUID
-## 1         NA 573520234272944129         NA
-## 2         NA 573519904407699456         NA
-## 3         NA 573519786610720768         NA
-##                                                                          statusSource
-## 1                  &lt;a href=&quot;http://twitter.com&quot; rel=&quot;nofollow&quot;&gt;Twitter Web Client&lt;/a&gt;
-## 2                  &lt;a href=&quot;http://twitter.com&quot; rel=&quot;nofollow&quot;&gt;Twitter Web Client&lt;/a&gt;
-## 3 &lt;a href=&quot;https://about.twitter.com/products/tweetdeck&quot; rel=&quot;nofollow&quot;&gt;TweetDeck&lt;/a&gt;
-##    screenName retweetCount isRetweet retweeted longitude latitude
-## 1    GilPress            1      TRUE     FALSE        NA       NA
-## 2    alowibdi            4      TRUE     FALSE        NA       NA
-## 3 mjcavaretta            1     FALSE     FALSE        NA       NA</code></pre>
+## 1         NA 573881388455211009         NA
+## 2         NA 573881192182849536         NA
+## 3         NA 573880897004511235         NA
+##                                                                         statusSource
+## 1 &lt;a href=&quot;http://twitter.com/download/iphone&quot; rel=&quot;nofollow&quot;&gt;Twitter for iPhone&lt;/a&gt;
+## 2                 &lt;a href=&quot;http://twitter.com&quot; rel=&quot;nofollow&quot;&gt;Twitter Web Client&lt;/a&gt;
+## 3                    &lt;a href=&quot;http://www.hootsuite.com&quot; rel=&quot;nofollow&quot;&gt;Hootsuite&lt;/a&gt;
+##    screenName retweetCount isRetweet retweeted     longitude    latitude
+## 1        JAdP            0     FALSE     FALSE -122.51167131 37.52982376
+## 2   civilstat            4      TRUE     FALSE          &lt;NA&gt;        &lt;NA&gt;
+## 3 SmartDataCo            0     FALSE     FALSE          &lt;NA&gt;        &lt;NA&gt;</code></pre>
 <p>Python:</p>
 <pre class="sourceCode python"><code class="sourceCode python"><span class="ch">import</span> tweepy
 <span class="ch">import</span> pandas <span class="ch">as</span> pd
@@ -253,44 +255,59 @@ new = pd.DataFrame()
 <span class="co"># some columns are in object form that requires more processing</span>
 <span class="dt">print</span> new.head(n=<span class="dv">3</span>)</code></pre>
 <pre><code>##                                             _api  \
-## 0  &lt;tweepy.api.API object at 0x0000000006452550&gt;   
-## 0  &lt;tweepy.api.API object at 0x0000000006452550&gt;   
-## 0  &lt;tweepy.api.API object at 0x0000000006452550&gt;   
+## 0  &lt;tweepy.api.API object at 0x0000000006498550&gt;   
+## 0  &lt;tweepy.api.API object at 0x0000000006498550&gt;   
+## 0  &lt;tweepy.api.API object at 0x0000000006498550&gt;   
 ## 
 ##                                                _json  \
 ## 0  {u'contributors': None, u'truncated': False, u...   
 ## 0  {u'contributors': None, u'truncated': False, u...   
 ## 0  {u'contributors': None, u'truncated': False, u...   
 ## 
-##                                               author contributors coordinates  \
-## 0  User(follow_request_sent=False, profile_use_ba...         None        None   
-## 0  User(follow_request_sent=False, profile_use_ba...         None        None   
-## 0  User(follow_request_sent=False, profile_use_ba...         None        None   
+##                                               author contributors  \
+## 0  User(follow_request_sent=False, profile_use_ba...         None   
+## 0  User(follow_request_sent=False, profile_use_ba...         None   
+## 0  User(follow_request_sent=False, profile_use_ba...         None   
 ## 
-##             created_at                                           entities  \
-## 0  2015-03-05 16:27:33  {u'symbols': [], u'user_mentions': [{u'id': 38...   
-## 0  2015-03-05 16:26:15  {u'symbols': [], u'user_mentions': [{u'id': 53...   
-## 0  2015-03-05 16:25:47  {u'symbols': [], u'user_mentions': [{u'id': 28...   
+##                                          coordinates           created_at  \
+## 0  {u'type': u'Point', u'coordinates': [-122.5116...  2015-03-06 16:22:39   
+## 0                                               None  2015-03-06 16:21:53   
+## 0                                               None  2015-03-06 16:20:42   
 ## 
-##   favorite_count favorited   geo  ...  place possibly_sensitive retweet_count  \
-## 0              0     False  None  ...   None              False             1   
-## 0              0     False  None  ...   None              False             4   
-## 0              0     False  None  ...   None              False             1   
+##                                             entities favorite_count favorited  \
+## 0  {u'symbols': [], u'user_mentions': [{u'id': 34...              1     False   
+## 0  {u'symbols': [], u'user_mentions': [{u'id': 89...              0     False   
+## 0  {u'symbols': [], u'user_mentions': [], u'hasht...              0     False   
 ## 
-##   retweeted                                   retweeted_status  \
-## 0     False  Status(contributors=None, truncated=False, tex...   
-## 0     False  Status(contributors=None, truncated=False, tex...   
-## 0     False                                                NaN   
+##                                                  geo  \
+## 0  {u'type': u'Point', u'coordinates': [37.529823...   
+## 0                                               None   
+## 0                                               None   
 ## 
-##                source                                    source_url  \
-## 0  Twitter Web Client                            http://twitter.com   
-## 0  Twitter Web Client                            http://twitter.com   
-## 0           TweetDeck  https://about.twitter.com/products/tweetdeck   
+##                          ...                          \
+## 0                        ...                           
+## 0                        ...                           
+## 0                        ...                           
+## 
+##                                                place possibly_sensitive  \
+## 0  Place(_api=&lt;tweepy.api.API object at 0x0000000...              False   
+## 0                                               None              False   
+## 0                                               None              False   
+## 
+##   retweet_count retweeted                                   retweeted_status  \
+## 0             0     False                                                NaN   
+## 0             4     False  Status(contributors=None, truncated=False, tex...   
+## 0             0     False                                                NaN   
+## 
+##                source                          source_url  \
+## 0  Twitter for iPhone  http://twitter.com/download/iphone   
+## 0  Twitter Web Client                  http://twitter.com   
+## 0           Hootsuite            http://www.hootsuite.com   
 ## 
 ##                                                 text truncated  \
-## 0  RT @mjcavaretta: MT @GMcareersDonna: Why #Wome...     False   
-## 0  RT @KirkDBorne: Programming for #DataScience i...     False   
-## 0  MT @GMcareersDonna: Why #Women Make Great #Dat...     False   
+## 0  Predictions, #DataScience #DataPrep join the t...     False   
+## 0  RT @BigDataGal: #rstats #datascience Very gent...     False   
+## 0  We've been honored as a top #DataScience resou...     False   
 ## 
 ##                                                 user  
 ## 0  User(follow_request_sent=False, profile_use_ba...  
@@ -298,6 +315,27 @@ new = pd.DataFrame()
 ## 0  User(follow_request_sent=False, profile_use_ba...  
 ## 
 ## [3 rows x 29 columns]</code></pre>
+</div>
+<div id="how-do-i-test-for-nanull-values-in-a-variable" class="section level3">
+<h3>How do I test for NA/null values in a variable?</h3>
+<p>R:</p>
+<pre class="sourceCode r"><code class="sourceCode r">url =<span class="st"> &quot;http://vincentarelbundock.github.io/Rdatasets/csv/datasets/airquality.csv&quot;</span>
+<span class="kw">download.file</span>(url, <span class="st">&quot;airquality.csv&quot;</span>, <span class="dt">quiet=</span><span class="ot">TRUE</span>)
+airquality &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;airquality.csv&quot;</span>, <span class="dt">header=</span><span class="ot">TRUE</span>, <span class="dt">stringsAsFactors=</span><span class="ot">FALSE</span>)
+<span class="kw">table</span>(<span class="kw">is.na</span>(airquality$Ozone))</code></pre>
+<pre><code>## 
+## FALSE  TRUE 
+##   116    37</code></pre>
+<p>Python:</p>
+<pre class="sourceCode python"><code class="sourceCode python"><span class="ch">import</span> pandas <span class="ch">as</span> pd
+<span class="ch">import</span> urllib
+url = <span class="st">&quot;http://vincentarelbundock.github.io/Rdatasets/csv/datasets/airquality.csv&quot;</span>
+urllib.urlretrieve(url, <span class="st">&quot;airquality.csv&quot;</span>)
+airquality = pd.read_csv(<span class="st">&quot;airquality.csv&quot;</span>, header=<span class="dv">0</span>)
+<span class="dt">print</span> pd.crosstab(<span class="st">'Ozone'</span>,pd.isnull(airquality[<span class="st">'Ozone'</span>]))</code></pre>
+<pre><code>## Ozone  False  True 
+## row_0              
+## Ozone    116     37</code></pre>
 </div>
 
 

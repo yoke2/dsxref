@@ -81,7 +81,7 @@ print df.head(n=3)
 You will need Twitter developer account set up for consumer key, consumer secret, access token and access secret. We are using twitteR package in R and tweepy package in Python.
 
 R:
-```{r readtweets-R}
+```{r readtweets-R, cache=TRUE}
 library(twitteR)
 consumerKey <- readLines("twitterkey.txt")
 consumerSecret <- readLines("twittersecret.txt")
@@ -95,7 +95,7 @@ head(tweetsDF,3)
 ```
 
 Python:
-```{r readtweets-python, engine='python'}
+```{r readtweets-python, engine='python', cache=TRUE}
 import tweepy
 import pandas as pd
 file1 = open('twitterkey.txt', 'r')
@@ -116,5 +116,26 @@ for tweet in tweets:
     new = new.append(pd.DataFrame.from_dict(tweet.__dict__,orient="index").transpose())
 # some columns are in object form that requires more processing
 print new.head(n=3)
+```
+
+### How do I test for NA/null values in a variable?
+
+
+R:
+```{r isna-R, cache=TRUE}
+url = "http://vincentarelbundock.github.io/Rdatasets/csv/datasets/airquality.csv"
+download.file(url, "airquality.csv", quiet=TRUE)
+airquality <- read.csv("airquality.csv", header=TRUE, stringsAsFactors=FALSE)
+table(is.na(airquality$Ozone))
+```
+
+Python:
+```{r isna-python, engine='python', cache=TRUE}
+import pandas as pd
+import urllib
+url = "http://vincentarelbundock.github.io/Rdatasets/csv/datasets/airquality.csv"
+urllib.urlretrieve(url, "airquality.csv")
+airquality = pd.read_csv("airquality.csv", header=0)
+print pd.crosstab('Ozone',pd.isnull(airquality['Ozone']))
 ```
 
