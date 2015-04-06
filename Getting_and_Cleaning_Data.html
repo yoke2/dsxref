@@ -102,7 +102,7 @@ iris = pd.read_csv(<span class="st">&quot;iris.csv&quot;</span>, header=<span cl
 <div id="how-do-i-read-an-excelxlsx-file" class="section level3">
 <h3>How do I read an Excel(xlsx) file?</h3>
 <p>We are using the iris dataset saved in the Excel xlsx format.</p>
-<p>R:</p>
+<p>Using the xlsx package in R (requires Java JRE to be installed):</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(xlsx)</code></pre>
 <pre><code>## Loading required package: rJava
 ## Loading required package: xlsxjars</code></pre>
@@ -122,6 +122,23 @@ url &lt;-<span class="st"> &quot;https://rawgit.com/yoke2/dsxref/master/iris.xls
 ## 1   1          5.1         3.5          1.4         0.2  setosa
 ## 2   2          4.9         3.0          1.4         0.2  setosa
 ## 3   3          4.7         3.2          1.3         0.2  setosa</code></pre>
+<p>Using the readxl package in R (no external dependencies):</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(readxl)
+<span class="kw">library</span>(httr)
+url &lt;-<span class="st"> &quot;https://rawgit.com/yoke2/dsxref/master/iris.xlsx&quot;</span>
+<span class="kw">GET</span>(url, <span class="kw">write_disk</span>(<span class="st">&quot;iris.xlsx&quot;</span>, <span class="dt">overwrite=</span><span class="ot">TRUE</span>))</code></pre>
+<pre><code>## Response [https://raw.githubusercontent.com/yoke2/dsxref/master/iris.xlsx]
+##   Date: 2015-04-07 00:03
+##   Status: 200
+##   Content-Type: application/octet-stream
+##   Size: 14.1 kB
+## &lt;ON DISK&gt;  iris.xlsx</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">iris &lt;-<span class="st"> </span><span class="kw">read_excel</span>(<span class="st">&quot;iris.xlsx&quot;</span>)
+<span class="kw">head</span>(iris, <span class="dv">3</span>)</code></pre>
+<pre><code>##     Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+## 1 1          5.1         3.5          1.4         0.2  setosa
+## 2 2          4.9         3.0          1.4         0.2  setosa
+## 3 3          4.7         3.2          1.3         0.2  setosa</code></pre>
 <p>Python:</p>
 <pre class="sourceCode python"><code class="sourceCode python"><span class="ch">import</span> pandas <span class="ch">as</span> pd
 <span class="ch">import</span> urllib

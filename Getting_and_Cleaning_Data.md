@@ -42,7 +42,7 @@ print iris.head(n=3)
 
 We are using the iris dataset saved in the Excel xlsx format.
 
-R:
+Using the xlsx package in R (requires Java JRE to be installed):
 
 ```r
 library(xlsx)
@@ -79,6 +79,37 @@ head(iris, 3)
 ## 1   1          5.1         3.5          1.4         0.2  setosa
 ## 2   2          4.9         3.0          1.4         0.2  setosa
 ## 3   3          4.7         3.2          1.3         0.2  setosa
+```
+
+Using the readxl package in R (no external dependencies):
+
+
+```r
+library(readxl)
+library(httr)
+url <- "https://rawgit.com/yoke2/dsxref/master/iris.xlsx"
+GET(url, write_disk("iris.xlsx", overwrite=TRUE))
+```
+
+```
+## Response [https://raw.githubusercontent.com/yoke2/dsxref/master/iris.xlsx]
+##   Date: 2015-04-07 00:03
+##   Status: 200
+##   Content-Type: application/octet-stream
+##   Size: 14.1 kB
+## <ON DISK>  iris.xlsx
+```
+
+```r
+iris <- read_excel("iris.xlsx")
+head(iris, 3)
+```
+
+```
+##     Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+## 1 1          5.1         3.5          1.4         0.2  setosa
+## 2 2          4.9         3.0          1.4         0.2  setosa
+## 3 3          4.7         3.2          1.3         0.2  setosa
 ```
 
 Python:

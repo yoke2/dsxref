@@ -32,7 +32,7 @@ print iris.head(n=3)
 
 We are using the iris dataset saved in the Excel xlsx format.
 
-R:
+Using the xlsx package in R (requires Java JRE to be installed):
 ```{r readxlsx-R, cache=TRUE}
 library(xlsx)
 library(httr)
@@ -40,6 +40,17 @@ url <- "https://rawgit.com/yoke2/dsxref/master/iris.xlsx"
 # note that we are handling HTTPS connection using httr package.
 GET(url, write_disk("iris.xlsx", overwrite=TRUE))
 iris <- read.xlsx("iris.xlsx", sheetIndex=1, header=TRUE)
+head(iris, 3)
+```
+
+Using the readxl package in R (no external dependencies):
+
+```{r readxl-R, cache=TRUE}
+library(readxl)
+library(httr)
+url <- "https://rawgit.com/yoke2/dsxref/master/iris.xlsx"
+GET(url, write_disk("iris.xlsx", overwrite=TRUE))
+iris <- read_excel("iris.xlsx")
 head(iris, 3)
 ```
 
