@@ -20,6 +20,25 @@ head(iris, 3)
 ## 3 3          4.7         3.2          1.3         0.2  setosa
 ```
 
+Using the readr package:
+
+```r
+library(readr)
+url = "http://vincentarelbundock.github.io/Rdatasets/csv/datasets/iris.csv"
+download.file(url, "iris.csv", quiet=TRUE)
+iris <- read_csv("iris.csv")
+# Note: You can use the problems() function to inspect data rows that may have
+#       potential issues like wrong date formats etc, if reported by readr
+head(iris, 3)
+```
+
+```
+##   [EMPTY] Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+## 1       1          5.1         3.5          1.4         0.2  setosa
+## 2       2          4.9         3.0          1.4         0.2  setosa
+## 3       3          4.7         3.2          1.3         0.2  setosa
+```
+
 Python:
 
 ```python
@@ -93,7 +112,7 @@ GET(url, write_disk("iris.xlsx", overwrite=TRUE))
 
 ```
 ## Response [https://raw.githubusercontent.com/yoke2/dsxref/master/iris.xlsx]
-##   Date: 2015-04-07 00:03
+##   Date: 2015-05-21 22:05
 ##   Status: 200
 ##   Content-Type: application/octet-stream
 ##   Size: 14.1 kB

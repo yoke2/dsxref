@@ -5,3 +5,5 @@ xlsx
 httr
 jsonlite
 twitteR
+readr
+readxl

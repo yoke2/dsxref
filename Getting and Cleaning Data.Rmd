@@ -18,6 +18,17 @@ iris <- read.csv("iris.csv", header=TRUE, stringsAsFactors=FALSE)
 head(iris, 3)
 ```
 
+Using the readr package:
+```{r readrcsv-R, cache=TRUE}
+library(readr)
+url = "http://vincentarelbundock.github.io/Rdatasets/csv/datasets/iris.csv"
+download.file(url, "iris.csv", quiet=TRUE)
+iris <- read_csv("iris.csv")
+# Note: You can use the problems() function to inspect data rows that may have
+#       potential issues like wrong date formats etc, if reported by readr
+head(iris, 3)
+```
+
 Python:
 ```{r readcsv-python, engine='python', cache=TRUE}
 import pandas as pd
