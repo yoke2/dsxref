@@ -1,0 +1,95 @@
+---
+title: "Visualization"
+output:
+  html_document:
+    keep_md: yes
+---
+
+## Numerical Variables
+
+### How do I plot a histogram with frequency count?
+```{r hist-r, cache=TRUE}
+url = "http://vincentarelbundock.github.io/Rdatasets/csv/datasets/airquality.csv"
+download.file(url, "airquality.csv", quiet=TRUE)
+air <- read.csv("airquality.csv", header=TRUE, stringsAsFactors=FALSE)
+hist(airquality$Temp, main="Frequency of Temperature", xlab="Temperature", ylab="Frequency")
+library(ggplot2)
+ggplot(data=airquality, aes(x=Temp)) + geom_histogram() +
+  labs(title="Frequency of Temperature", x="Temperature", y="Frequency")
+```
+
+### How do I plot a histogram with density line?
+```{r hist2-r, cache=TRUE}
+url = "http://vincentarelbundock.github.io/Rdatasets/csv/datasets/airquality.csv"
+download.file(url, "airquality.csv", quiet=TRUE)
+air <- read.csv("airquality.csv", header=TRUE, stringsAsFactors=FALSE)
+hist(air$Temp, prob=TRUE, main = "Density plot of Temperature", xlab = "Temperature", ylab = "Density")
+lines(density(air$Temp),col = "blue")
+library(ggplot2)
+ggplot(data=air, aes(x=Temp)) + geom_histogram(aes(y=..density..)) +
+  geom_density(colour="blue") +
+  labs(title="Frequency of Temperature", x="Temperature", y="Frequency")
+```
+
+### How do I make a scatterplot?
+```{r scatter-r, cache=TRUE}
+url = "http://vincentarelbundock.github.io/Rdatasets/csv/datasets/airquality.csv"
+download.file(url, "airquality.csv", quiet=TRUE)
+air <- read.csv("airquality.csv", header=TRUE, stringsAsFactors=FALSE)
+plot(Wind~Temp,data=air,pch=20, main = "Wind vs Temperature", xlab = "Temperature", ylab = "Wind")
+library(ggplot2)
+ggplot(data=air, aes(x=Temp,y=Wind)) + geom_point() +
+  labs(title="Wind vs Temperature", x="Temperature", y="Wind")
+```
+
+### How do I make a boxplot (single variable)?
+```{r boxplot-r, cache=TRUE}
+url = "http://vincentarelbundock.github.io/Rdatasets/csv/datasets/airquality.csv"
+download.file(url, "airquality.csv", quiet=TRUE)
+air <- read.csv("airquality.csv", header=TRUE, stringsAsFactors=FALSE)
+boxplot(air$Ozone, main="Ozone", horizontal=TRUE)
+library(ggplot2)
+ggplot(data=air, aes(x=factor(0),y=Ozone)) + geom_boxplot() + coord_flip() +
+  labs(title="Ozone", x="")
+```
+
+
+## Categorical Variables
+### How do I make a side-by-side boxplot?
+```{r boxplot2-r, cache=TRUE}
+url = "http://vincentarelbundock.github.io/Rdatasets/csv/datasets/iris.csv"
+download.file(url, "iris.csv", quiet=TRUE)
+iris <- read.csv("iris.csv", header=TRUE, stringsAsFactors=FALSE)
+boxplot(Petal.Length~Species,data=iris, main="Petal Length vs Species")
+library(ggplot2)
+# Species is a factor
+ggplot(data=iris, aes(x=Species, y=Petal.Length)) + geom_boxplot() +
+  labs(title="Petal Length vs Species")
+```
+
+### How do I make a barplot?
+```{r barplot-r, cache=TRUE}
+url = "http://vincentarelbundock.github.io/Rdatasets/csv/datasets/mtcars.csv"
+download.file(url, "mtcars.csv", quiet=TRUE)
+cars <- read.csv("mtcars.csv", header=TRUE, stringsAsFactors=FALSE)
+with(cars, barplot(table(cyl),main="Count of Cars vs Cylinder Types",xlab="Cylinder Type", ylab="Count"))
+library(ggplot2)
+ggplot(data=cars, aes(x=factor(cyl))) + geom_bar() +
+  labs(title="Count of Cars vs Cylinder Types", x="Cylinder Type", y="Count")
+```
+
+## Maps
+### How do I read and plot Shape (SHP) files?
+
+Here we shall plot the Singapore map outline using data from [Diva GIS](http://www.diva-gis.org/).
+
+```{r plotSHP-R, cache=TRUE, message=FALSE}
+library(httr)
+url <- "http://biogeo.ucdavis.edu/data/diva/adm/SGP_adm.zip"
+GET(url, write_disk("SGP_adm.zip", overwrite=TRUE))
+unzip("SGP_adm.zip",exdir="./SGP_adm")
+library(rgdal)
+ogrListLayers(dsn="./SGP_adm/SGP_adm0.shp")
+sgp <- readOGR(dsn="./SGP_adm/SGP_adm0.shp", layer="SGP_adm0")
+plot(sgp)
+```
